@@ -5,11 +5,13 @@ VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{5B3DE252-57A0-4BB1-914E-48EB8C485A7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{34655C38-4D1A-4562-B703-3D2191087500}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{34655C38-4D1A-4562-B703-3D2191087500}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{E19B62A5-C08C-4A48-8AC0-078C0D11DB89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{E19B62A5-C08C-4A48-8AC0-078C0D11DB89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{1539E250-BA0D-41E9-8912-DE6B30B79141}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{1539E250-BA0D-41E9-8912-DE6B30B79141}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{7CF1C143-DAFA-40E8-880F-CFD7B48EBC9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1539E250-BA0D-41E9-8912-DE6B30B79141}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1539E250-BA0D-41E9-8912-DE6B30B79141}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1539E250-BA0D-41E9-8912-DE6B30B79141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CF1C143-DAFA-40E8-880F-CFD7B48EBC9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CF1C143-DAFA-40E8-880F-CFD7B48EBC9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CF1C143-DAFA-40E8-880F-CFD7B48EBC9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CF1C143-DAFA-40E8-880F-CFD7B48EBC9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

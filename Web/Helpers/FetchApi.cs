@@ -3,10 +3,8 @@
     using Domain.PriceListAggregate;
     using System;
     using System.Net.Http;
-    using System.Text.Json;
     using System.Threading.Tasks;
     using Newtonsoft.Json;
-    using System.Security.AccessControl;
 
     public class FetchApi : IFetchApi
     {
@@ -14,11 +12,11 @@
         private readonly string _username;
         private readonly string _password; 
 
-        public FetchApi(string apiUrl, string username, string password)
+        public FetchApi()
         {
-            _apiUrl = apiUrl;
-            _username = username;
-            _password = password;
+            _apiUrl = "https://assignments.novater.com/v1/bus/schedule";
+            _username = "karmo";
+            _password = "71b4b3253c40c6f59cc4af5b9005d105";
         }
 
         public async Task<PriceList> FetchPriceListAsync()
@@ -27,16 +25,13 @@
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    // Set up basic authentication
                     string base64Credentials = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes($"{_username}:{_password}"));
                     client.DefaultRequestHeaders.Add("Authorization", $"Basic {base64Credentials}");
 
-                    // Send a GET request to the API
                     HttpResponseMessage response = await client.GetAsync(_apiUrl);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        // Parse the JSON response into a PriceList object
                         string json = await response.Content.ReadAsStringAsync();
                         PriceList priceList = JsonConvert.DeserializeObject<PriceList>(json);
 
@@ -52,10 +47,8 @@
             }
             catch (Exception ex)
             {
-                // Handle exceptions, e.g., log the error or throw an exception.
                 throw ex;
             }
         }
     }
-
 }

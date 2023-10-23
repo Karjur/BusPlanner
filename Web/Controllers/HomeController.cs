@@ -1,9 +1,8 @@
-﻿using Domain.PriceListAggregate;
-using Microsoft.AspNetCore.Http.Extensions;
+﻿using Domain.ClientAggregate;
+using Domain.ClientAggregate.Valueobjects;
+using Domain.PriceListAggregate;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using Web.Helpers;
-using Web.Models;
 using Web.ViewModels.PriceListViewModels;
 
 namespace Web.Controllers
@@ -16,11 +15,7 @@ namespace Web.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-
-            string apiUrl = "https://assignments.novater.com/v1/bus/schedule";
-            string username = "karmo";
-            string password = "71b4b3253c40c6f59cc4af5b9005d105";
-            _apiHelper = new FetchApi(apiUrl, username, password);
+            _apiHelper = new FetchApi();
         }
 
         public IActionResult Index()
@@ -28,24 +23,26 @@ namespace Web.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public async Task<IActionResult> Reserve(ReserveInputModel input)
         {
-            return View();
+            var client = Client.Create(Name.Create("test", "klient").Value).Value;
+            Reservation reservation = Reservation.Create(input.SelectedExpires, client.Id, client.Name.FirstName, client.Name.LastName, 
+                input.SelectedFrom, input.SelectedTo, input.SelectedDate, input.SelectedStart, input.SelectedEnd, input.SelectedPrice, input.SelectedCarrierCompany).Value;
+
+            client.AddReservation(DateTime.Parse(input.SelectedExpires), reservation);
+
+            return RedirectToAction("PriceList");
         }
 
+        [HttpGet]
         public async Task<IActionResult> PriceList(SearchRoutesInputModel input)
         {
             var apiData = await _apiHelper.FetchPriceListAsync();
 
             var priceListViewModel = MapToViewModel(apiData, input.SelectedFrom, input.SelectedTo);
-
+                
             return View("PriceList", priceListViewModel);
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
         private PriceListViewModel MapToViewModel(PriceList apiData, string selectedFrom, string selectedTo)
@@ -71,8 +68,8 @@ namespace Web.Controllers
                         StartDate = schedule.StartEndToDate(schedule.Start.Date),
                         StartTime = schedule.StartEndToTime(schedule.Start.Date),
                         EndDate = schedule.StartEndToDate(schedule.Start.Date),
-                        EndTime = schedule.StartEndToTime(schedule.Start.Date),
-                        CompanyName = schedule.Company.State
+                        EndTime = schedule.StartEndToTime(schedule.End.Date),
+                        CarrierCompany = schedule.Company.State
                     }).ToList()
                 }).ToList()
             };
@@ -81,6 +78,17 @@ namespace Web.Controllers
         }
     }
 
+    public record ReserveInputModel
+    {
+        public required string SelectedExpires { get; init; }
+        public required string SelectedFrom { get; init; }
+        public required string SelectedTo { get; init; }
+        public required string SelectedDate { get; init; }
+        public required string SelectedStart { get; init; }
+        public required string SelectedEnd { get; init; }
+        public required double SelectedPrice { get; init; }
+        public required string SelectedCarrierCompany { get; init; }
+    }
     public record SearchRoutesInputModel
     {
         public required string SelectedFrom { get; init; }

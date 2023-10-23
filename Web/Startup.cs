@@ -13,7 +13,7 @@ namespace Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IFetchApi, FetchApi>();
+            services.AddSingleton<IFetchApi ,FetchApi>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

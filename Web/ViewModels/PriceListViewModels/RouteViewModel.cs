@@ -8,6 +8,4 @@
         public required int Distance { get; init; }
         public required List<ScheduleViewModel> Schedule { get; init; }
     }
-
-
 }

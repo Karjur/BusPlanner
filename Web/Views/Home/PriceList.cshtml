@@ -1,56 +1,66 @@
 ﻿@model Web.ViewModels.PriceListViewModels.PriceListViewModel
 
-<h1>Price List</h1>
+<h1>Hinnakiri</h1>
 
-<p>ID: @Model.Id</p>
 <p>Expires: @Model.Expires</p>
 
-<table>
-    <thead>
-        <tr>
-            <th>From</th>
-            <th>To</th>
-            <th>Distance</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var route in Model.Routes)
+<form asp-controller="Home" asp-action="Reserve" method="post">
+
+    <input type="hidden" name="SelectedExpires" value="@Model.Expires" />
+
+    @foreach (var route in Model.Routes)
+    {
+        @if (route.Schedule.Any())
         {
-            <tr>
-                <td>@route.From</td>
-                <td>@route.To</td>
-                <td>@route.Distance</td>
-            </tr>
-            @if (route.Schedule.Any())
+            foreach (var schedule in route.Schedule)
             {
-                <tr>
-                    <td colspan="4">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Hind</th>
-                                    <th>Algus kuupäev</th>
-                                    <th>Sõidu algus</th>
-                                    <th>Sõidu lõpp</th>
-                                    <th>Company</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var schedule in route.Schedule)
-                                {
-                                    <tr>
-                                        <td>@schedule.Price</td>
-                                        <td>@schedule.StartDate</td>
-                                        <td>@schedule.StartTime</td>
-                                        <td>@schedule.EndTime</td>
-                                        <td>@schedule.CompanyName</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
+                <div class="row">
+                    <div class="col">
+                        <input type="hidden" name="SelectedFrom" value="@route.From" />
+                        @route.From
+                    </div>
+                    <div class="col">
+                        <input type="hidden" name="SelectedTo" value="@route.To" />
+                        @route.To
+                    </div>
+                    <div class="col">
+                        <input type="hidden" name="SelectedDate" value="@schedule.StartDate" />
+                        @schedule.StartDate
+                    </div>
+                    <div class="col">
+                        <input type="hidden" name="SelectedStart" value="@schedule.StartTime" />
+                        @schedule.StartTime
+                    </div>
+                    <div class="col">
+                        <input type="hidden" name="SelectedEnd" value="@schedule.EndTime" />
+                        @schedule.EndTime
+                    </div>
+                    <div class="col">
+                        <input type="hidden" name="SelectedPrice" value="@schedule.Price" />
+                        @schedule.Price
+                    </div>
+                    <div class="col">
+                        <input type="hidden" name="SelectedCarrierCompany" value="@schedule.CarrierCompany" />
+                        @schedule.CarrierCompany
+                    </div>
+                    <div class="col">
+                        <button class="reserve-button" type="submit">Broneeri reis</button>
+                    </div>
+                </div>
             }
         }
-    </tbody>
-</table>
+        else
+        {
+            <div class="row">
+                <div class="col">@route.From</div>
+                <div class="col">@route.To</div>
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+        }
+    }
+</form>

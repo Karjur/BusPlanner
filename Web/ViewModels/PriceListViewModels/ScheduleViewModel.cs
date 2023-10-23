@@ -8,6 +8,6 @@
         public required string StartTime { get; init; }
         public required string EndDate { get; init; }
         public required string EndTime { get; init; }
-        public required string CompanyName { get; init; }
+        public required string CarrierCompany { get; init; }
     }
 }
