@@ -1,0 +1,42 @@
+﻿@using Web.ViewModels.SearchRoutesViewModels;
+@model Web.ViewModels.SearchRoutesViewModels.SearchRoutesViewModel;
+
+@{
+    ViewData["Title"] = "Otsi reise";
+}
+
+<form asp-controller="Home" asp-action="PriceList" method="get">
+    <div class="form-group">
+        <label>Lähtekoht:</label>
+        <select class="form-control" id="fromLocation" asp-for="SelectedFrom">
+            <option selected="selected" value="">Kõik</option>
+            <option value="Tallinn">Tallinn</option>
+            <option value="Tartu">Tartu</option>
+            <option value="Pärnu">Pärnu</option>
+            <option value="Viljandi">Viljandi</option>
+            <option value="Rapla">Rapla</option>
+            <option value="Narva">Narva</option>
+            <option value="Rakvere">Rakvere</option>
+            <option value="Kärdla">Kärdla</option>
+            <option value="Haapsalu">Haapsalu</option>
+            <option value="Kuressaare">Kuressaare</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Sihtpunkt:</label>
+        <select class="form-control" id="toLocation" asp-for="SelectedTo">
+            <option selected="selected" value="">Kõik</option>
+            <option value="Tallinn">Tallinn</option>
+            <option value="Tartu">Tartu</option>
+            <option value="Pärnu">Pärnu</option>
+            <option value="Viljandi">Viljandi</option>
+            <option value="Rapla">Rapla</option>
+            <option value="Narva">Narva</option>
+            <option value="Rakvere">Rakvere</option>
+            <option value="Kärdla">Kärdla</option>
+            <option value="Haapsalu">Haapsalu</option>
+            <option value="Kuressaare">Kuressaare</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Otsi reise</button>
+</form>

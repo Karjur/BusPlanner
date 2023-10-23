@@ -1,0 +1,56 @@
+﻿@model Web.ViewModels.PriceListViewModels.PriceListViewModel
+
+<h1>Price List</h1>
+
+<p>ID: @Model.Id</p>
+<p>Expires: @Model.Expires</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>Distance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var route in Model.Routes)
+        {
+            <tr>
+                <td>@route.From</td>
+                <td>@route.To</td>
+                <td>@route.Distance</td>
+            </tr>
+            @if (route.Schedule.Any())
+            {
+                <tr>
+                    <td colspan="4">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Hind</th>
+                                    <th>Algus kuupäev</th>
+                                    <th>Sõidu algus</th>
+                                    <th>Sõidu lõpp</th>
+                                    <th>Company</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var schedule in route.Schedule)
+                                {
+                                    <tr>
+                                        <td>@schedule.Price</td>
+                                        <td>@schedule.StartDate</td>
+                                        <td>@schedule.StartTime</td>
+                                        <td>@schedule.EndTime</td>
+                                        <td>@schedule.CompanyName</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
